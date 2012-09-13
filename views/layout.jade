@@ -1,0 +1,27 @@
+!!! 5
+html
+    head
+        title Happy Hands
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+        link(href='/_assets/css/bootstrap.css', rel='stylesheet')
+        link(href='/_assets/css/bootstrap-responsive.css', rel='stylesheet')
+
+        != css('app')
+
+        script(src='http://code.jquery.com/jquery-1.8.0.min.js')
+
+        != js('app')
+
+        block head
+
+    body
+        .navbar.navbar-inverse
+            .navbar-inner
+                .container
+                    a.brand(href='/') Happy Hands
+                    ul.nav
+                        li
+                            a
+        .container.main
+            block content

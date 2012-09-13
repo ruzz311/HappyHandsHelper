@@ -1,0 +1,22 @@
+{
+  "name": "HappyHandsHelper",
+  "version": "0.0.1-2",
+  "dependencies": {
+    "cdir": "v0.1.2",
+    "express": "v3.0.0rc4",
+    "socket.io" : "v0.9.10",
+    "coffee-script": "v1.3.3",
+    "jade": "*",
+    "stylus": "*",
+    "nib" : "*",
+    "connect-assets" : "v2.2.1",
+    "connect-assets-jade" : "v0.0.3",
+    "chai" : "v1.2.0"
+  },
+  "scripts": {
+    "start": "runner.js"
+  },
+  "engines": {
+    "node": "0.9.x"
+  }
+}
