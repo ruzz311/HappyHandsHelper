@@ -4,4 +4,25 @@ block head
     != js('broadcast')
 
 block content
-    a#start-stop.btn.btn-primary.btn-large(href='#') Start
+    #record
+
+        .overlay
+
+        .before
+            h2.code Your Secret code is 
+                span= rando
+
+            p To start recording your gesture, please visit happyhands.jit.su on a speperate device and enter your secret code.
+
+            a#start.btn.btn-primary.btn-large(href='#') Start Recording
+
+            p If you've come to this page looking for more information about the library, please visit 
+                a(href = '/home') the home page
+
+        .recording
+            h2 Recording...
+            a#stop.btn.btn-danger.btn-large(href='#') Stop
+
+        .complete
+            h2 Complete
+            a#restart.btn.btn-success.btn-large(href='#') Start Over

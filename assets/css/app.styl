@@ -1,1 +1,35 @@
 @import nib
+
+$red        = #ff0000
+$grey       = grey
+
+
+
+#record
+    
+    h2
+        text-align      center
+
+    h2.code
+        color           $grey
+        span
+            color       $red
+            font-style  italic
+
+    #start, #stop, #restart
+        display         block
+        width           50%
+        padding         20px 0
+        margin          20px auto
+
+    .overlay
+        display         none
+        position        absolute
+        top             0
+        left            0
+        width           100%
+        height          100%
+        background      rgba(255,255,255, .5) url(../img/ajax_loader.gif) no-repeat center center
+
+    .recording, .complete
+        display         none

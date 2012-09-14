@@ -3,6 +3,9 @@ extends layout
 block head
     != js('listen')
 
+block navigation
+    include navbar
+
 block content
     input(placeholder='Enter 5 Digit Code')
     input(type='button', value='Submit')

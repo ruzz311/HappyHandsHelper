@@ -31,8 +31,11 @@ app.set 'view engine', 'jade'
 
 # Routes
 app.get '/', routes.index
+app.get '/home', routes.go_home
 app.get '/listen', routes.listen
 app.get '/broadcast', routes.broadcast
+app.get '/broadcast/record', routes.record
+app.get '/broadcast/new_session', routes.new_broadcast_session
 
 
 # ---
