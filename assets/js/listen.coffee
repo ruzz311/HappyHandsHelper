@@ -38,7 +38,10 @@ socket.on 'update_data', (positions) ->
 
     template = '['
     for position in positions
-        template += position
+        if _i == positions.length - 1
+            template += "#{position}"
+        else
+            template += "#{position},"
     template += '],'
 
     $('#dump').append template
