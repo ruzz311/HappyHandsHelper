@@ -1,8 +1,24 @@
+socket = io.connect('/')
+
 $ ->
     
     $('#start').click ->
-        $('.before').fadeOut 'normal', ->
-            $('.recording').fadeIn()
+
+        $('.overlay').fadeIn()
+
+        $.ajax
+            type    : 'GET'
+            url     : '/listen/connect'
+            data    :
+                listen_id   : socket.socket.sessionid
+                secret      : $('#secret').val().trim()
+
+            success : ->
+                $('.overlay').fadeIn()
+                $('.before').fadeOut 'normal', ->
+                    $('.recording').fadeIn()
+
+
 
     $('#restart').click (e) ->
         e.preventDefault()
@@ -11,6 +27,18 @@ $ ->
                 $('.before').find('input').val('')
                 $('.before').fadeIn()
 
+
+
     recording_complete = ->
         $('.recording').fadeOut 'normal', ->
             $('.complete').fadeIn()
+
+
+socket.on 'update_data', (positions) ->
+
+    template = '['
+    for position in positions
+        template += position
+    template += '],'
+
+    $('#dump').append template

@@ -1,6 +1,5 @@
-console.dir     = require('cdir')
-
 # App
+console.dir     = require 'cdir'
 express         = require 'express'
 http            = require 'http'
 path            = require 'path'
@@ -15,10 +14,9 @@ env             = process.env.environment || 'development'
 
 
 # Express Configuration
-
-app = express()
-server = http.createServer app
-io.listen server
+app     = express()
+server  = http.createServer(app)
+io      = io.listen server
 
 app.use assets()
 app.use express.logger 'dev'
@@ -34,38 +32,18 @@ app.set 'view engine', 'jade'
 # Routes
 app.get '/', routes.index
 app.get '/home', routes.go_home
+
 app.get '/listen', routes.listen
+app.get '/listen/connect', routes.listen_connect, (req, res) ->
+    io.sockets.sockets[req.the_one.broadcast_id].on 'orientation_change', (position) ->
+        io.sockets.sockets[req.the_one.listen_id].emit 'update_data', position
+    res.send {'listening' : true}
+
 app.get '/broadcast', routes.broadcast
-app.get '/broadcast/record', routes.record
-app.get '/broadcast/new_session', routes.new_broadcast_session
+app.get '/broadcast/record', routes.record, (req, res) ->
+    res.send {'recording' : true}
 
 
 # ---
 console.log "listening on #{port} in #{env} environment"
-app.listen port
-
-
-
-
-
-###
-io.sockets.on 'connection', (socket) ->
-
-    socket.on 'alpha_update', (data) ->
-        socket.broadcast.emit 'update_a', data
-
-    socket.on 'beta_update', (data) ->
-        socket.broadcast.emit 'update_b', data
-
-    socket.on 'gamma_update', (data) ->
-        socket.broadcast.emit 'update_g', data
-
-    socket.on 'x_update', (data) ->
-        socket.broadcast.emit 'update_x', data
-
-    socket.on 'y_update', (data) ->
-        socket.broadcast.emit 'update_y', data
-
-    socket.on 'z_update', (data) ->
-        socket.broadcast.emit 'update_z', data
-###
+server.listen port

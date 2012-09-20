@@ -1,22 +1,56 @@
+url         = require 'url'
+connections = []
+
+
 exports.index = (req, res) ->
     ua = req.headers['user-agent']
     if (/mobile/i.test(ua)) then res.redirect '/broadcast'
     else res.render 'index'
 
+
 exports.listen = (req, res) ->
     res.render 'listen'
 
-exports.broadcast = (req, res) ->
-    res.render 'broadcast', {rando : random_string(4)}
 
-exports.record = (req, res) ->
-    res.send {'recording' : true}
+
+exports.listen_connect = (req, res, next) ->
+    url_parts   = url.parse req.url, true
+    query       = url_parts.query
+
+    for connection in connections
+        if connection.secret == query.secret
+            connection.listen_id = query.listen_id
+            req.the_one = connection
+            next()
+
+
+
+exports.broadcast = (req, res) ->
+    rando = random_string(4)
+
+    connections.push
+        broadcast_id    : null
+        listen_id       : null
+        secret          : rando
+
+    res.render 'broadcast', {secret : rando}
+
+
+
+exports.record = (req, res, next) ->
+    url_parts   = url.parse req.url, true
+    query       = url_parts.query
+
+    for connection in connections
+        if connection.secret == query.secret
+            connection.broadcast_id = query.broadcast_id
+            req.the_one = connection
+            next()
+
+
 
 exports.go_home = (req, res) ->
     res.render 'index'
-
-exports.new_broadcast_session = (req, res) ->
-    res.send {rando : random_string(4)}
 
 
 

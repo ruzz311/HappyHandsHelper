@@ -1,7 +1,6 @@
-$ ->
-    
-    socket_id = 0
+socket = io.connect('/')
 
+$ ->
 
     $('#start').click ->
 
@@ -10,8 +9,11 @@ $ ->
         $.ajax
             type    : 'GET'
             url     : '/broadcast/record'
+            data    :
+                broadcast_id    : socket.socket.sessionid
+                secret          : $('#secret').text().trim()
+
             success : (data) ->
-                #init socket
                 $('.overlay').fadeOut()
                 $('.before').fadeOut 'fast', ->
                     $('.recording').fadeIn('fast')
@@ -26,14 +28,10 @@ $ ->
 
 
     $('#restart').click ->
+        $('.complete').fadeOut 'fast', ->
+            $('.before').fadeIn('fast')
 
-        $('.overlay').fadeIn()
+                
 
-        $.ajax
-            type    : 'GET'
-            url     : '/broadcast/new_session'
-            success : (data) ->
-                $('.overlay').fadeOut()
-                $('.before').find('h2').find('span').text(data.rando)
-                $('.complete').fadeOut 'fast', ->
-                    $('.before').fadeIn('fast')
+window.emit_event = (pos) ->
+    socket.emit 'orientation_change', pos

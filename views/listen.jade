@@ -1,7 +1,9 @@
 extends layout
 
 block head
+    script(src='/socket.io/socket.io.js')
     != js('listen')
+    
 
 block navigation
     include navbar
@@ -11,12 +13,14 @@ block content
     #listen
 
         .before
-            input(placeholder='Enter 4 Digit Code')
+            input#secret(placeholder='Enter 4 Digit Code')
             a#start.btn.btn-success.btn-large(href='#') Start Listening
 
         .recording
             h2 Listening...
-            .well Receiving Information
+            .well
+                p Waiting for information
+                pre#dump
 
         .complete
             h2 Gyroscope Data

@@ -1,6 +1,7 @@
 extends layout
 
 block head
+    script(src='/socket.io/socket.io.js')
     != js('broadcast')
 
 block content
@@ -10,7 +11,7 @@ block content
 
         .before
             h2.code Your Secret code is 
-                span= rando
+                span#secret= secret
 
             p To start recording your gesture, please visit happyhands.jit.su on a speperate device and enter your secret code.
 
