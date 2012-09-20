@@ -35,12 +35,19 @@ app.get '/home', routes.go_home
 
 app.get '/listen', routes.listen
 app.get '/listen/connect', routes.listen_connect, (req, res) ->
-    io.sockets.sockets[req.the_one.broadcast_id].on 'orientation_change', (position) ->
-        io.sockets.sockets[req.the_one.listen_id].emit 'update_data', position
     res.send {'listening' : true}
 
 app.get '/broadcast', routes.broadcast
 app.get '/broadcast/record', routes.record, (req, res) ->
+
+    io.sockets.sockets[req.the_one.broadcast_id].on 'orientation_change', (position) ->
+        if req.the_one.listen_id
+            io.sockets.sockets[req.the_one.listen_id].emit 'update_data', position
+
+    io.sockets.sockets[req.the_one.broadcast_id].on 'start_over', (position) ->
+        if req.the_one.listen_id
+            io.sockets.sockets[req.the_one.listen_id].emit 'start_over', position
+
     res.send {'recording' : true}
 
 

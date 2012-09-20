@@ -45,3 +45,6 @@ socket.on 'update_data', (positions) ->
     template += '],'
 
     $('#dump').append template
+
+socket.on 'start_over', (data) ->
+    $('#dump').empty()

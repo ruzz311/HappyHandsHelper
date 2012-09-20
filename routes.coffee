@@ -56,7 +56,7 @@ exports.go_home = (req, res) ->
 
 random_string = (len) ->
 
-    char_set    = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    char_set    = 'abcdefghijklmnpqrstuvwxyz123456789'
     rando       = ''
 
     i = 0

@@ -33,6 +33,7 @@ $ ->
 
 
     $('#restart').click ->
+        socket.emit 'start_over', 'true'
         $('.complete').fadeOut 'fast', ->
             $('.before').fadeIn('fast')
 
