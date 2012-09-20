@@ -2,6 +2,7 @@ console.dir     = require('cdir')
 
 # App
 express         = require 'express'
+http            = require 'http'
 path            = require 'path'
 stylus          = require 'stylus'
 nib             = require 'nib'
@@ -16,7 +17,8 @@ env             = process.env.environment || 'development'
 # Express Configuration
 
 app = express()
-io.listen app
+server = http.createServer app
+io.listen server
 
 app.use assets()
 app.use express.logger 'dev'

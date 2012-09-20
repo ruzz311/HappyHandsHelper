@@ -1,4 +1,11 @@
 extends layout
 
+block navigation
+    include navbar
+
 block content
-    Hi
+    #home
+        h2 What do you want to do today?
+        .wrap
+            a.listen.btn.btn-primary.btn-large(href = '/listen') Listen
+            a.broadcast.btn.btn-primary.btn-large(href = '/broadcast') Broadcast

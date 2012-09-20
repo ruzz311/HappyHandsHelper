@@ -1,7 +1,7 @@
 exports.index = (req, res) ->
     ua = req.headers['user-agent']
     if (/mobile/i.test(ua)) then res.redirect '/broadcast'
-    else res.redirect '/listen'
+    else res.render 'index'
 
 exports.listen = (req, res) ->
     res.render 'listen'

@@ -1,8 +1,35 @@
 @import nib
 
+$pink       = #FFB3B3
 $red        = #ff0000
 $grey       = grey
 
+
+#primary_nav
+    .navbar-inner
+        border-radius   0
+
+
+#home
+    h2
+        text-align      center
+        margin-bottom   50px
+
+    .wrap
+        width           60%
+        margin          auto
+
+    .btn
+        width           40%
+        display         block
+        margin          auto
+        font-size       1.5em
+
+    .listen
+        float           left
+
+    .broadcast
+        float           right
 
 
 #record
@@ -19,8 +46,10 @@ $grey       = grey
     #start, #stop, #restart
         display         block
         width           50%
-        padding         20px 0
+        padding         20px
         margin          20px auto
+        font-size       1.5em
+        font-weight     bold
 
     .overlay
         display         none
@@ -33,3 +62,31 @@ $grey       = grey
 
     .recording, .complete
         display         none
+
+
+#listen
+
+    input
+        color           $red
+        margin          20px auto
+        font-size       1.5em
+        display         block
+        padding         15px 0 10px
+        text-align      center
+        font-weight     bold
+        width           33%
+
+    input::placeholder, input::-webkit-input-placeholder
+        color           $pink
+
+    .btn
+        width           30%
+        display         block
+        margin          auto
+        font-size       1.5em
+
+    .recording, .complete
+        display         none
+
+    #restart
+        margin-top      20px
