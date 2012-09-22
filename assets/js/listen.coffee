@@ -32,7 +32,6 @@ $ ->
 
                 else
                     $('.alert').fadeOut 'fast'
-                    $('.overlay').fadeIn()
                     $('.before').fadeOut 'normal', ->
                         $('.recording').fadeIn()
 

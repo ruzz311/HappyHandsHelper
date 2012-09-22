@@ -8,8 +8,6 @@ $ ->
 
     $('#start').click ->
 
-        $('.overlay').fadeIn()
-
         $.ajax
             type    : 'GET'
             url     : '/broadcast/record'
@@ -18,24 +16,24 @@ $ ->
                 secret          : $('#secret').text().trim()
 
             success : (data) ->
-                $('.overlay').fadeOut()
-                $('.before').fadeOut 'fast', ->
-                    emit_int = setInterval emit_event, 10
-                    $('.recording').fadeIn('fast')
+                $('.before').hide()
+                $('.recording').show()
+                emit_int = setInterval emit_event, 10
 
 
 
     $('#stop').click ->
+        first = 1
         clearInterval emit_int
-        $('.recording').fadeOut 'fast', ->
-            $('.complete').fadeIn('fast')
+        $('.recording').hide()
+        $('.complete').show()
 
 
 
     $('#restart').click ->
         socket.emit 'start_over', 'true'
         $('.complete').fadeOut 'fast', ->
-            $('.before').fadeIn('fast')
+            $('.before').fadeIn 'fast'
 
 
 emit_event = (pos) ->
