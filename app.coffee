@@ -35,7 +35,10 @@ app.get '/home', routes.go_home
 
 app.get '/listen', routes.listen
 app.get '/listen/connect', routes.listen_connect, (req, res) ->
-    res.send {'listening' : true}
+    if !req.err
+        res.send {'listening' : true}
+    else
+        res.send {'error' : req.err}
 
 app.get '/broadcast', routes.broadcast
 app.get '/broadcast/record', routes.record, (req, res) ->

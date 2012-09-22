@@ -1,10 +1,22 @@
-socket = io.connect('/')
+socket      = io.connect('/')
+$dump       = null
+$records    = null
 
 $ ->
     
+    $dump       = $('#dump')
+    $records    = $('.records')
+    
+    $(window).keydown (e) ->
+        if e.keyCode == 13
+            for wrapper in $('.wrapper')
+                if $(wrapper).is(':visible')
+                    $(wrapper).find('.btn').trigger('click')
+
+    
     $('#start').click ->
 
-        $('.overlay').fadeIn()
+        $('.alert').fadeOut 'fast'
 
         $.ajax
             type    : 'GET'
@@ -13,10 +25,20 @@ $ ->
                 listen_id   : socket.socket.sessionid
                 secret      : $('#secret').val().trim()
 
-            success : ->
-                $('.overlay').fadeIn()
-                $('.before').fadeOut 'normal', ->
-                    $('.recording').fadeIn()
+            success : (message) ->
+                if message.error
+                    $('.alert').find('.message').text message.error
+                    $('.alert').fadeIn 'fast'
+
+                else
+                    $('.alert').fadeOut 'fast'
+                    $('.overlay').fadeIn()
+                    $('.before').fadeOut 'normal', ->
+                        $('.recording').fadeIn()
+
+            error   : (err) ->
+                $('.alert').find('.message').text 'Some unknown error occured'
+                $('.alert').fadeIn 'fast'
 
 
 
@@ -29,6 +51,11 @@ $ ->
 
 
 
+    $('.alert').find('.close').click ->
+        $('.alert').fadeOut 'fast', ->
+
+
+
     recording_complete = ->
         $('.recording').fadeOut 'normal', ->
             $('.complete').fadeIn()
@@ -36,15 +63,23 @@ $ ->
 
 socket.on 'update_data', (positions) ->
 
-    template = '['
+    ###
+    template = '<div>['
     for position in positions
         if _i == positions.length - 1
             template += "#{position}"
         else
             template += "#{position},"
-    template += '],'
+    template += '],</div>'
+    ###
 
-    $('#dump').append template
+    template = '<tr>'
+    for position in positions
+        template += "<td>#{position}</td>"
+    template += '</tr>'
+
+    $dump.append template
+    $records.scrollTop 10000000000
 
 socket.on 'start_over', (data) ->
-    $('#dump').empty()
+    $dump.empty()

@@ -16,12 +16,18 @@ exports.listen = (req, res) ->
 exports.listen_connect = (req, res, next) ->
     url_parts   = url.parse req.url, true
     query       = url_parts.query
+    connected   = false
 
     for connection in connections
         if connection.secret == query.secret
+            connected = true
             connection.listen_id = query.listen_id
             req.the_one = connection
             next()
+
+    if connected == false
+        req.err = 'Could not find code, did you enter it correctly?'
+        next()
 
 
 

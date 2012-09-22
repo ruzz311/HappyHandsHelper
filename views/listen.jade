@@ -12,20 +12,46 @@ block content
 
     #listen
 
-        .before
+        .alert.error.alert-error.wrapper
+            a.close(href='#', type='button', data-dismiss='alert') x
+            h4.alert-heading Error
+            p.message
+
+        .before.wrapper
             input#secret(placeholder='Enter 4 Digit Code')
             a#start.btn.btn-success.btn-large(href='#') Start Listening
 
-        .recording
+        .recording.wrapper
             h2 Listening...
             .well
                 h4 Your Records:
-                pre
-                    [
-                    span#dump
-                    ]
+                .records
+                    table.table.table-striped
+                        thead
+                            tr
+                                th Alpha
+                                th Beta
+                                th Gamma
+                                th Accel X
+                                th Accel Y
+                                th Accel Z
+                                th Gravity X
+                                th Gravity Y
+                                th Gravity Z
+                        tbody#dump
+                        thead
+                            tr
+                                th Alpha
+                                th Beta
+                                th Gamma
+                                th Accel X
+                                th Accel Y
+                                th Accel Z
+                                th Gravity X
+                                th Gravity Y
+                                th Gravity Z
 
-        .complete
+        .complete.wrapper
             h2 Gyroscope Data
             .well [[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1]]
             a#download.btn.btn-primary.btn-large(href='#') Download Records

@@ -9,6 +9,9 @@ $grey       = grey
     .navbar-inner
         border-radius   0
 
+.alert-heading
+    margin-bottom       15px
+
 
 #home
     h2
@@ -51,6 +54,9 @@ $grey       = grey
         font-size       1.5em
         font-weight     bold
 
+    #stop
+        padding         120px 60px
+
     .overlay
         display         none
         position        absolute
@@ -66,14 +72,12 @@ $grey       = grey
 
 #listen
 
-    pre
+    .error
+        display         none
+
+    .records
         max-height      500px
         overflow        scroll
-        line-height     2.2em
-        opacity         .8
-        border          none
-        font-size       .8em
-        padding         0
 
     input
         color           $red

@@ -1,6 +1,8 @@
 socket      = io.connect('/')
 orientation = []
+last_orientation = []
 emit_int    = null
+first       = 1
 
 $ ->
 
@@ -18,9 +20,7 @@ $ ->
             success : (data) ->
                 $('.overlay').fadeOut()
                 $('.before').fadeOut 'fast', ->
-                    emit_int = setInterval (->
-                        emit_event()
-                    ), 100
+                    emit_int = setInterval emit_event, 10
                     $('.recording').fadeIn('fast')
 
 
@@ -39,7 +39,20 @@ $ ->
 
 
 emit_event = (pos) ->
-    socket.emit 'orientation_change', orientation
+
+    if first
+        for item in orientation
+            last_orientation[_i] = item
+        first = 0
+
+    pass = 0
+    for item in orientation
+        if (Math.abs(item - last_orientation[_j])) > 5
+            pass = 1
+            last_orientation[_j] = item
+
+    if pass
+        socket.emit 'orientation_change', orientation
 
 
 window.ondeviceorientation = (e) ->
