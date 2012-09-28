@@ -33,7 +33,7 @@ app.set 'view engine', 'jade'
 app.get '/', routes.index
 app.get '/home', routes.go_home
 
-app.get '/sample', routes.sample
+app.get '/test_drive', routes.test_drive
 
 app.get '/listen', routes.listen
 app.get '/listen/connect', routes.listen_connect, (req, res) ->

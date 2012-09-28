@@ -60,8 +60,8 @@ exports.go_home = (req, res) ->
 
 
 
-exports.sample = (req, res) ->
-    res.render 'sample'
+exports.test_drive = (req, res) ->
+    res.render 'test_drive'
 
 
 
