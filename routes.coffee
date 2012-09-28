@@ -60,6 +60,11 @@ exports.go_home = (req, res) ->
 
 
 
+exports.sample = (req, res) ->
+    res.render 'sample'
+
+
+
 random_string = (len) ->
 
     char_set    = 'abcdefghijklmnpqrstuvwxyz123456789'

@@ -1,11 +1,32 @@
+ZeroClipboard.setMoviePath( '/js/ZeroClipboard10.swf' )
+
 socket      = io.connect('/')
-$dump       = null
+$dom_dump   = null
+$arr_dump   = null
 $records    = null
+clip        = null
 
 $ ->
-    
-    $dump       = $('#dump')
+
+    $dom_dump   = $('#dump')
+    $arr_dump   = $('#arr_dump')
     $records    = $('.records')
+
+    #--- copy to clipboard
+    clip = new ZeroClipboard.Client()
+    clip.setHandCursor true
+
+    clip.glue 'clip_button', 'clip_container'
+    clip.addEventListener 'mouseOver', ->
+        text        = $arr_dump.text()
+        clip_text   = text.substring(0, text.length - 1);
+        clip_text   = "[#{clip_text}]"
+        clip.setText clip_text
+
+    clip.addEventListener 'complete', (client, text) ->
+        alert 'copied to clipboard'
+    #---
+
     
     $(window).keydown (e) ->
         if e.keyCode == 13
@@ -34,51 +55,37 @@ $ ->
                     $('.alert').fadeOut 'fast'
                     $('.before').fadeOut 'normal', ->
                         $('.recording').fadeIn()
+                        $('#clip_container').css 'opacity', 1
 
             error   : (err) ->
                 $('.alert').find('.message').text 'Some unknown error occured'
                 $('.alert').fadeIn 'fast'
 
 
-
-    $('#restart').click (e) ->
-        e.preventDefault()
-        if confirm('Are you sure you want to restart? This information is not stored and you will lose this information')
-            $('.complete').fadeOut 'normal', ->
-                $('.before').find('input').val('')
-                $('.before').fadeIn()
-
-
-
     $('.alert').find('.close').click ->
         $('.alert').fadeOut 'fast', ->
 
 
-
-    recording_complete = ->
-        $('.recording').fadeOut 'normal', ->
-            $('.complete').fadeIn()
-
-
 socket.on 'update_data', (positions) ->
 
-    ###
-    template = '<div>['
+    arr_template = '['
+    dom_template = '<tr>'
+
     for position in positions
+        dom_template += "<td>#{position}</td>"
+
         if _i == positions.length - 1
-            template += "#{position}"
-        else
-            template += "#{position},"
-    template += '],</div>'
-    ###
+            arr_template += "#{position}"
+        else arr_template += "#{position},"
 
-    template = '<tr>'
-    for position in positions
-        template += "<td>#{position}</td>"
-    template += '</tr>'
+    arr_template += '],'
+    dom_template += '</tr>'
 
-    $dump.append template
+    $dom_dump.append dom_template
+    $arr_dump.append arr_template
     $records.scrollTop 10000000000
 
+
 socket.on 'start_over', (data) ->
-    $dump.empty()
+    $dom_dump.empty()
+    $arr_dump.empty()

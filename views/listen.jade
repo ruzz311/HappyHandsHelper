@@ -2,8 +2,9 @@ extends layout
 
 block head
     script(src='/socket.io/socket.io.js')
+    script(src='js/ZeroClipboard.min.js')
     != js('listen')
-    
+
 
 block navigation
     include navbar
@@ -18,11 +19,13 @@ block content
             p.message
 
         .before.wrapper
+
             input#secret(placeholder='Enter 4 Digit Code')
             a#start.btn.btn-success.btn-large(href='#') Start Listening
 
         .recording.wrapper
             h2 Listening...
+
             .well
                 h4 Your Records:
                 .records
@@ -32,27 +35,21 @@ block content
                                 th Alpha
                                 th Beta
                                 th Gamma
-                                th Accel X
-                                th Accel Y
-                                th Accel Z
-                                th Gravity X
-                                th Gravity Y
-                                th Gravity Z
+                                th X
+                                th Y
+                                th Z
                         tbody#dump
                         thead
                             tr
                                 th Alpha
                                 th Beta
                                 th Gamma
-                                th Accel X
-                                th Accel Y
-                                th Accel Z
-                                th Gravity X
-                                th Gravity Y
-                                th Gravity Z
+                                th X
+                                th Y
+                                th Z
 
-        .complete.wrapper
-            h2 Gyroscope Data
-            .well [[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1],[20, 50, 15, 9, 3, 6, 80, 5 ,1], [20, 50, 15, 9, 3, 6, 80, 5 ,1]]
-            a#download.btn.btn-primary.btn-large(href='#') Download Records
-            a#restart.btn.btn-danger.btn-large(href='#') Restart
+                #arr_dump
+
+        #clip_container
+            p Copy to Clipboard
+            #clip_button

@@ -33,6 +33,8 @@ app.set 'view engine', 'jade'
 app.get '/', routes.index
 app.get '/home', routes.go_home
 
+app.get '/sample', routes.sample
+
 app.get '/listen', routes.listen
 app.get '/listen/connect', routes.listen_connect, (req, res) ->
     if !req.err
