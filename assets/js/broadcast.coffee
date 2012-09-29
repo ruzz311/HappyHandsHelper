@@ -1,24 +1,33 @@
-socket      = io.connect('/')
-orientation = []
-last_orientation = []
-emit_int    = null
-first       = 1
+socket              = io.connect('/')
+orientation         = []
+last_orientation    = []
+emit_int            = null
+first               = 1
+attached            = false
 
 $ ->
 
     $('#start').click ->
 
-        $.ajax
-            type    : 'GET'
-            url     : '/broadcast/record'
-            data    :
-                broadcast_id    : socket.socket.sessionid
-                secret          : $('#secret').text().trim()
+        if !attached
 
-            success : (data) ->
-                $('.before').hide()
-                $('.recording').show()
-                emit_int = setInterval emit_event, 10
+            $.ajax
+                type    : 'GET'
+                url     : '/broadcast/record'
+                data    :
+                    broadcast_id    : socket.socket.sessionid
+                    secret          : $('#secret').text().trim()
+
+                success : (data) ->
+                    attached = true
+                    $('.before').hide()
+                    $('.recording').show()
+                    emit_int = setInterval emit_event, 10
+
+        else
+            $('.before').hide()
+            $('.recording').show()
+            emit_int = setInterval emit_event, 10
 
 
 
@@ -50,6 +59,7 @@ emit_event = (pos) ->
             last_orientation[_j] = item
 
     if pass
+        console.log orientation
         socket.emit 'orientation_change', orientation
 
 

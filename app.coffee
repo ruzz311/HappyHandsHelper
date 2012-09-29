@@ -44,7 +44,7 @@ app.get '/listen/connect', routes.listen_connect, (req, res) ->
 
 app.get '/broadcast', routes.broadcast
 app.get '/broadcast/record', routes.record, (req, res) ->
-
+    
     io.sockets.sockets[req.the_one.broadcast_id].on 'orientation_change', (position) ->
         if req.the_one.listen_id
             io.sockets.sockets[req.the_one.listen_id].emit 'update_data', position
