@@ -49,6 +49,9 @@ app.get '/listen/connect', routes.listen_connect, (req, res) ->
 
 
 app.get '/broadcast/record', routes.record, (req, res) ->
+
+    io.sockets.sockets[req.the_one.broadcast_id].on 'disconnect', (socket) ->
+        routes.remove_from_array req.the_one.broadcast_id
     
     io.sockets.sockets[req.the_one.broadcast_id].on 'orientation_change', (position) ->
         if req.the_one.listen_id
@@ -63,7 +66,6 @@ app.get '/broadcast/record', routes.record, (req, res) ->
             io.sockets.sockets[req.the_one.listen_id].emit 'next_view', name
 
     io.sockets.sockets[req.the_one.broadcast_id].on 'test_drive_success', (name) ->
-        console.log name
         if req.the_one.listen_id
             io.sockets.sockets[req.the_one.listen_id].emit 'success', name
 

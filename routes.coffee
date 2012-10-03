@@ -71,6 +71,14 @@ exports.record = (req, res, next) ->
 
 
 
+exports.remove_from_array = (id) ->
+
+    for connection in connections
+        if connection.broadcast_id == id
+            connections.splice _i, 1
+
+
+
 is_mobile = (req) ->
     ua = req.headers['user-agent']
     if (/mobile/i.test(ua)) then return true 
