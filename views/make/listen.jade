@@ -1,13 +1,9 @@
-extends layout
+extends ../layout
 
 block head
     script(src='/socket.io/socket.io.js')
     script(src='js/ZeroClipboard.min.js')
-    != js('listen')
-
-
-block navigation
-    include navbar
+    != js('make/listen')
 
 block content
 

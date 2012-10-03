@@ -1,8 +1,8 @@
-extends layout
+extends ../layout
 
 block head
     script(src='/socket.io/socket.io.js')
-    != js('broadcast')
+    != js('make/broadcast')
 
 block content
     #record

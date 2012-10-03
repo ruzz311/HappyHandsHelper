@@ -1,0 +1,21 @@
+extends ../layout
+
+block head
+    script(src='/socket.io/socket.io.js')
+    != js('test_drive/broadcast')
+
+block content
+
+    #record.test_drive
+
+        .before
+            h2.code Your Secret code is 
+                span#secret= secret
+
+            a#start.btn.btn-success.btn-large(href='#') Start Demo
+
+        .recording
+            h2 Listening...
+
+            a#next.btn.btn-primary.btn-large(href = '#') Next
+            a#prev.btn.btn-primary.btn-large(href = '#') Previous

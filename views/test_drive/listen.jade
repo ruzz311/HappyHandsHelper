@@ -1,0 +1,23 @@
+extends ../layout
+
+block head
+    script(src='/socket.io/socket.io.js')
+    != js('test_drive/listen')
+
+block content
+
+    #listen.test_drive
+
+        .alert.error.alert-error.wrapper
+            a.close(href='#', type='button', data-dismiss='alert') x
+            h4.alert-heading Error
+            p.message
+
+
+        .before.wrapper
+            input#secret(placeholder='Enter 4 Digit Code')
+            a#start.btn.btn-success.btn-large(href='#') Start Listening
+
+
+        .listening.wrapper
+            h2.name

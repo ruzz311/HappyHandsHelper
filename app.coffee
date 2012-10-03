@@ -31,18 +31,23 @@ app.set 'view engine', 'jade'
 
 # Routes
 app.get '/', routes.index
-app.get '/home', routes.go_home
-
+app.get '/make', routes.make
+app.get '/make/listen', routes.make_listen
+app.get '/make/broadcast', routes.make_broadcast
 app.get '/test_drive', routes.test_drive
+app.get '/test_drive/listen', routes.test_drive_listen
+app.get '/test_drive/broadcast', routes.test_drive_broadcast
 
-app.get '/listen', routes.listen
+
+
 app.get '/listen/connect', routes.listen_connect, (req, res) ->
     if !req.err
         res.send {'listening' : true}
     else
         res.send {'error' : req.err}
 
-app.get '/broadcast', routes.broadcast
+
+
 app.get '/broadcast/record', routes.record, (req, res) ->
     
     io.sockets.sockets[req.the_one.broadcast_id].on 'orientation_change', (position) ->
@@ -52,6 +57,15 @@ app.get '/broadcast/record', routes.record, (req, res) ->
     io.sockets.sockets[req.the_one.broadcast_id].on 'start_over', (position) ->
         if req.the_one.listen_id
             io.sockets.sockets[req.the_one.listen_id].emit 'start_over', position
+
+    io.sockets.sockets[req.the_one.broadcast_id].on 'next_view', (name) ->
+        if req.the_one.listen_id
+            io.sockets.sockets[req.the_one.listen_id].emit 'next_view', name
+
+    io.sockets.sockets[req.the_one.broadcast_id].on 'test_drive_success', (name) ->
+        console.log name
+        if req.the_one.listen_id
+            io.sockets.sockets[req.the_one.listen_id].emit 'success', name
 
     res.send {'recording' : true}
 

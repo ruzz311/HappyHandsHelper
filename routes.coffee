@@ -2,14 +2,36 @@ url         = require 'url'
 connections = []
 
 
-exports.index = (req, res) ->
-    ua = req.headers['user-agent']
-    if (/mobile/i.test(ua)) then res.redirect '/broadcast'
-    else res.render 'index'
+
+exports.index = (req, res) -> res.render 'index'
+exports.make_listen = (req, res) -> res.render 'make/listen'
+exports.test_drive_listen = (req, res) -> res.render 'test_drive/listen'
 
 
-exports.listen = (req, res) ->
-    res.render 'listen'
+
+exports.make = (req, res) ->
+    if is_mobile(req)
+        res.render 'make/broadcast', {secret : connect_sockets()}
+    else
+        res.render 'make/listen'
+
+
+
+exports.test_drive = (req, res) ->
+    if is_mobile(req)
+        res.render 'test_drive/broadcast', {secret : connect_sockets()}
+    else
+        res.render 'test_drive/listen'
+
+
+
+exports.make_broadcast = (req, res) ->
+    res.render 'make/broadcast', {secret : connect_sockets()}
+
+
+
+exports.test_drive_broadcast = (req, res) ->
+    res.render 'test_drive/broadcast', {secret : connect_sockets()}
 
 
 
@@ -20,26 +42,18 @@ exports.listen_connect = (req, res, next) ->
 
     for connection in connections
         if connection.secret == query.secret
-            connected = true
+            
             connection.listen_id = query.listen_id
             req.the_one = connection
+
+            if connection.actions
+                req.actions = connection.actions
+            connected = true
             next()
 
     if connected == false
         req.err = 'Could not find code, did you enter it correctly?'
         next()
-
-
-
-exports.broadcast = (req, res) ->
-    rando = random_string(4)
-
-    connections.push
-        broadcast_id    : null
-        listen_id       : null
-        secret          : rando
-
-    res.render 'broadcast', {secret : rando}
 
 
 
@@ -49,19 +63,30 @@ exports.record = (req, res, next) ->
 
     for connection in connections
         if connection.secret == query.secret
+            if query['actions[]']
+                connection.actions = query['actions[]']
             connection.broadcast_id = query.broadcast_id
             req.the_one = connection
             next()
 
 
 
-exports.go_home = (req, res) ->
-    res.render 'index'
+is_mobile = (req) ->
+    ua = req.headers['user-agent']
+    if (/mobile/i.test(ua)) then return true 
+    else return false
 
 
 
-exports.test_drive = (req, res) ->
-    res.render 'test_drive'
+connect_sockets = (req, res) ->
+    rando = random_string(4)
+
+    connections.push
+        broadcast_id    : null
+        listen_id       : null
+        secret          : rando
+
+    return rando
 
 
 
