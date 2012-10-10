@@ -67,16 +67,31 @@ $ ->
 
 
 socket.on 'update_data', (positions) ->
-
+    #define some data 
+    g = new canvasGraph('graph')
+    gData=new Array()
     arr_template = '['
     dom_template = '<tr>'
-
+    pos = {};
+    
     for position in positions
         dom_template += "<td>#{position}</td>"
 
         if _i == positions.length - 1
             arr_template += "#{position}"
         else arr_template += "#{position},"
+        
+        position = position * 10
+        
+        if _i == 3
+            pos.x = position
+        else if _i == 4
+            pos.y = position
+        else if _i == 5
+            pos.z = position * 10
+            
+    gData.push({ x:pos.x, y:pos.y, z:pos.z })
+    g.drawGraph gData
 
     arr_template += '],'
     dom_template += '</tr>'

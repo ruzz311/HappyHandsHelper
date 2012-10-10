@@ -3,7 +3,9 @@ extends ../layout
 block head
     script(src='/socket.io/socket.io.js')
     script(src='js/ZeroClipboard.min.js')
+    script(src='js/canvas3DGraph.js')
     != js('make/listen')
+    
 
 block content
 
@@ -21,6 +23,12 @@ block content
 
         .recording.wrapper
             h2 Listening...
+            
+            #g-holder.graph
+                #canvasDiv
+                    canvas#graph(width="600", height="600")
+                    #gInfo
+                #controls
 
             .well
                 h4 Your Records:

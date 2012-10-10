@@ -64,12 +64,12 @@ emit_event = (pos) ->
 
 
 window.ondeviceorientation = (e) ->
-    orientation[0] = Math.round(e.alpha*100)/100
-    orientation[1] = Math.round(e.beta*100)/100
-    orientation[2] = Math.round(e.gamma*100)/100
+    orientation[0] = Math.round(e.alpha*1000)/1000
+    orientation[1] = Math.round(e.beta*1000)/1000
+    orientation[2] = Math.round(e.gamma*1000)/1000
 
 
 window.ondevicemotion = (e) ->
-    orientation[3] = Math.round(e.accelerationIncludingGravity.x*100)/100
-    orientation[4] = Math.round(e.accelerationIncludingGravity.y*100)/100
-    orientation[5] = Math.round(e.accelerationIncludingGravity.z*100)/100
+    orientation[3] = Math.round(e.accelerationIncludingGravity.x*1000)/1000
+    orientation[4] = Math.round(e.accelerationIncludingGravity.y*1000)/1000
+    orientation[5] = Math.round(e.accelerationIncludingGravity.z*1000)/1000
